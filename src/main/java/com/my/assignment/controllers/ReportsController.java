@@ -47,10 +47,16 @@ public class ReportsController implements Initializable {
     @FXML
     private Label basLbl;
 
-    public ObservableList<Student> list = FXCollections.observableArrayList(new Students().getCurrentList());
+    private final AdminController adminController = new AdminController().getCurrentInstance();
+
+//    public ObservableList<Student> list = FXCollections.observableArrayList(new Students().getCurrentList());
+
+    private ObservableList<Student> list;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        tableView.getItems().clear();
+        list = adminController.getList();
         name.setCellValueFactory(new PropertyValueFactory<Student, String>("name"));
         totalFee.setCellValueFactory(new PropertyValueFactory<Student, Double>("totalFee"));
         scholarship.setCellValueFactory(new PropertyValueFactory<Student, Double>("scholarship"));
@@ -75,16 +81,25 @@ public class ReportsController implements Initializable {
             for (int j = 0; j <= 5; j++) {
                 switch (i) {
                     case 1:
-                        tuition_total += Double.parseDouble(tableView.getColumns().get(i).getCellData(j).toString());
+                        System.out.println(tableView.getColumns().get(i).getCellData(j) == null);
+                        if(!(tableView.getColumns().get(i).getCellData(j) == null)) {
+                            tuition_total += Double.parseDouble(tableView.getColumns().get(i).getCellData(j).toString());
+                        }
                         break;
                     case 2:
-                        scholarship_total += Double.parseDouble(tableView.getColumns().get(i).getCellData(j).toString());
+                        if(!(tableView.getColumns().get(i).getCellData(j) == null)) {
+                            scholarship_total += Double.parseDouble(tableView.getColumns().get(i).getCellData(j).toString());
+                        }
                         break;
                     case 3:
-                        deduction_total += Double.parseDouble(tableView.getColumns().get(i).getCellData(j).toString());
+                        if(!(tableView.getColumns().get(i).getCellData(j) == null)) {
+                            deduction_total += Double.parseDouble(tableView.getColumns().get(i).getCellData(j).toString());
+                        }
                         break;
                     case 4:
-                        net_total += Double.parseDouble(tableView.getColumns().get(i).getCellData(j).toString());
+                        if(!(tableView.getColumns().get(i).getCellData(j) == null)) {
+                            net_total += Double.parseDouble(tableView.getColumns().get(i).getCellData(j).toString());
+                        }
                         break;
                     default:
                         return;

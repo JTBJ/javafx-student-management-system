@@ -53,8 +53,10 @@ public class Validator{
                 && validate(addressPattern,address)
                 && validate(typePattern,type)
                 && validate(IDPattern,ID)
-                && (credits%6!=0||credits<0)
-                && (scholarship<0 || scholarship >100000);
+                && (credits >= 0 && credits % 6 == 0)
+                && (scholarship >= 0 && scholarship <= 100000);
+//                && (credits % 6 != 0 || credits < 0)
+//                && (scholarship < 0 || scholarship > 100000);
     }
 
     public void addError(String msg){

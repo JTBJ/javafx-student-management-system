@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 public class UpdateExistingUser implements Initializable {
@@ -43,6 +44,8 @@ public class UpdateExistingUser implements Initializable {
 
     private final AdminController adminController = new AdminController().getCurrentInstance();
     private Students students;
+    private String nameToChange;
+
 //    private Validator validator;
 
     public static StringBuilder errorMessage;
@@ -55,9 +58,65 @@ public class UpdateExistingUser implements Initializable {
                 studentAddress.getText(), studentTuitionType.getText(), studentId.getText(),
                 Integer.parseInt(studentCredits.getText()), Double.parseDouble(studentScholarship.getText()))) {
 
-            adminController.getList().add(new Student(studentName.getText(), studentEmail.getText(),
-                    studentPhone.getText(), studentAddress.getText(), studentId.getText(), studentTuitionType.getText(),
-                    Integer.parseInt(studentCredits.getText()), Double.parseDouble(studentScholarship.getText()), studentDeduction.getText()));
+            for(int i = 0; i < adminController.getList().size(); i++) {
+                if(adminController.getList().get(i).hasName(nameToChange)) {
+                    adminController.getList().get(i).updateDetails(studentName.getText(),
+                            studentEmail.getText(), studentPhone.getText(), studentAddress.getText(), studentId.getText(),
+                            studentTuitionType.getText(), Integer.parseInt(studentCredits.getText()),
+                            Double.parseDouble(studentScholarship.getText()), studentDeduction.getText());
+                }
+            }
+
+
+
+
+            //System.out.println(adminController.getTableView().getSelectionModel().getSelectedItem().toString());
+
+//            for(int i = 0; i < adminController.getTableView().getItems().size(); i++) {
+
+//            Iterator<Student> iterator = adminController.getTableView().getItems().iterator();
+//            while(iterator.hasNext()) {
+//                Student student = iterator.next();
+//                if(student.hasName(nameToChange)) {
+//                    student.updateDetails(studentName.getText(),
+//                            studentEmail.getText(), studentPhone.getText(), studentAddress.getText(), studentId.getText(),
+//                            studentTuitionType.getText(), Integer.parseInt(studentCredits.getText()),
+//                            Double.parseDouble(studentScholarship.getText()), studentDeduction.getText());
+//                    iterator.remove();
+//                }
+//            }
+
+
+//            for(Student student : adminController.getTableView().getItems()) {
+//
+//                if(student.hasName(nameToChange)) {
+//                    student.updateDetails(studentName.getText(),
+//                            studentEmail.getText(), studentPhone.getText(), studentAddress.getText(), studentId.getText(),
+//                            studentTuitionType.getText(), Integer.parseInt(studentCredits.getText()),
+//                            Double.parseDouble(studentScholarship.getText()), studentDeduction.getText());
+//                }
+
+
+//                System.out.println(i);
+//                if(adminController.getTableView().getItems().get().hasName(nameToChange)) {
+//                    adminController.getTableView().getItems().get(i).updateDetails(studentName.getText(),
+//                            studentEmail.getText(), studentPhone.getText(), studentAddress.getText(), studentId.getText(),
+//                            studentTuitionType.getText(), Integer.parseInt(studentCredits.getText()),
+//                            Double.parseDouble(studentScholarship.getText()), studentDeduction.getText());
+//                }
+            //}
+
+            System.out.println(studentName.getText());
+            System.out.println(adminController.getTableView().getItems().toString());
+            System.out.println(adminController.getList().toString());
+           // adminController.getList()
+//
+//
+//
+//
+//            adminController.getList().add(new Student(studentName.getText(), studentEmail.getText(),
+//                    studentPhone.getText(), studentAddress.getText(), studentId.getText(), studentTuitionType.getText(),
+//                    Integer.parseInt(studentCredits.getText()), Double.parseDouble(studentScholarship.getText()), studentDeduction.getText()));
 
 //            students.getCurrentList().add(new Student(studentName.getText(), studentEmail.getText(),
 //                    studentPhone.getText(), studentAddress.getText(), studentId.getText(), studentTuitionType.getText(),
@@ -68,6 +127,7 @@ public class UpdateExistingUser implements Initializable {
             App.changeRoot("/com/my/assignment/assignment2/view/adminController", "Admin", 615, 440);
         }else {
             System.out.println("Invalid");
+            System.out.println(studentAddress.getText());
             validator.generateErrors(studentName.getText(), studentEmail.getText(), studentPhone.getText(),
                     studentAddress.getText(), studentTuitionType.getText(), studentId.getText(),
                     Integer.parseInt(studentCredits.getText()), Double.parseDouble(studentScholarship.getText()));
@@ -87,6 +147,7 @@ public class UpdateExistingUser implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        nameToChange = adminController.getListHelper().get(0).getName();
         addStudentBtn.setDisable(true);
         studentName.setText(adminController.getListHelper().get(0).getName());
         studentEmail.setText(adminController.getListHelper().get(0).getEmail());

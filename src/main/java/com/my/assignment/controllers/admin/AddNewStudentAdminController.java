@@ -67,11 +67,12 @@ public class AddNewStudentAdminController implements Initializable {
 //                    studentPhone.getText(), studentAddress.getText(), studentId.getText(), studentTuitionType.getText(),
 //                    Integer.parseInt(studentCredits.getText()), Double.parseDouble(studentScholarship.getText()), studentDeduction.getText()));
 
-            adminController.getTableView().setItems(adminController.getList());
+//            adminController.getTableView().setItems(adminController.getList());
             System.out.println("Valid");
             App.changeRoot("/com/my/assignment/assignment2/view/adminController", "Admin", 615, 440);
         }else {
             System.out.println("Invalid");
+            System.out.println(studentAddress.getText());
             validator.generateErrors(studentName.getText(), studentEmail.getText(), studentPhone.getText(),
                     studentAddress.getText(), studentTuitionType.getText(), studentId.getText(),
                     Integer.parseInt(studentCredits.getText()), Double.parseDouble(studentScholarship.getText()));

@@ -1,15 +1,16 @@
 package com.my.assignment.controllers;
 
 import com.my.assignment.assignment2.App;
-import com.my.assignment.controllers.admin.AddNewStudentAdminController;
 import com.my.assignment.model.Student;
 import com.my.assignment.model.Students;
-import javafx.beans.property.Property;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
@@ -32,38 +33,20 @@ public class AdminController implements Initializable {
     @FXML private Button delete;
     @FXML private Button select;
     @FXML private Button slip;
-    @FXML private Button report;
-    @FXML private Button close;
-
-//    @FXML private TextField studentName;
-//    @FXML private TextField studentEmail;
-//    @FXML private TextField studentPhone;
-//    @FXML private TextField studentAddress;
-//    @FXML private TextField studentId;
-//    @FXML private TextField studentTuitionType;
-//    @FXML private TextField studentCredits;
-//    @FXML private TextField studentScholarship;
-//    @FXML private TextField studentDeduction;
-//
-//    @FXML private Button update = new Button();
-//
-//    @FXML Label errorLabel = new Label();
 
     private Students students;
     private static List<Student> listHelper;
 
-//    private Validator validator;
-
-//    public static StringBuilder errorMessage;
-
-    public ObservableList<Student> list = FXCollections.observableArrayList(new Students().getCurrentList());
+    public static ObservableList<Student> list = FXCollections.observableArrayList(new Students().getCurrentList());
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        name.setCellValueFactory(new PropertyValueFactory<Student, String>("name"));
-        email.setCellValueFactory(new PropertyValueFactory<Student, String>("email"));
-        phone.setCellValueFactory(new PropertyValueFactory<Student, String>("phone"));
+        tableView.getItems().clear();
+        name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        phone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         tableView.setItems(list);
+        System.out.println("Is this called each view");
     }
 
     @FXML
@@ -136,7 +119,9 @@ public class AdminController implements Initializable {
 
     @FXML
     public void deleteItemFromTable() {
-        tableView.getItems().removeAll(tableView.getSelectionModel().getSelectedItem());
+        list.remove(tableView.getSelectionModel().getSelectedItem());
+//        tableView.getItems().removeAll(tableView.getSelectionModel().getSelectedItem());
+        tableView.setItems(list);
         delete.setDisable(true);
         select.setDisable(true);
         slip.setDisable(true);
@@ -172,7 +157,7 @@ public class AdminController implements Initializable {
     }
 
     public TableView<Student> getTableView() {
-        return tableView;
+        return this.tableView;
     }
 
     public ObservableList<Student> getList() {
